@@ -1,18 +1,22 @@
 import * as React from 'react'
 import { RouteComponentProps } from '@reach/router'
+import usePriceInput from '../Hooks/usePriceInput'
 
-const Home: React.FunctionComponent<RouteComponentProps> = () => {
+const HomePage: React.FunctionComponent<RouteComponentProps> = () => {
+
+const [price, PriceInput, setPrice] = usePriceInput('Price', 'enter a price')
+
+  
   function submitFormData(e: React.FormEvent<HTMLFormElement>) {}
   return (
     <div>
       <form onSubmit={submitFormData}>
-        <label>
-          Name:
-          <input type="text" ref={input => (this.input = input)} />
-        </label>
+        <div>
+          <PriceInput />
+        </div>
       </form>
     </div>
   )
 }
 
-export default Home
+export default HomePage
