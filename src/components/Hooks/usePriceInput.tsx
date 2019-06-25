@@ -8,13 +8,12 @@ interface CurrencyOptions{
 }
 
 interface StateProps{
-  value: string
+  amount: string
   error: boolean
   success: boolean
-  displayPrice: string
 }
 const defaultState = {
-  value: '',
+  amount: '',
   error: false,
   success: false
 }
@@ -32,8 +31,8 @@ const usePriceInput = (label:string, placeholder:string, currencyOptions = defau
 
   React.useEffect(()=>{
     inputRef.current.focus()
-  }, [state.value])
-  
+  }, [state.amount])
+
   const id = `use-input-${label.replace(' ', '').toLowerCase()}`
 
   function formatPrice(value: string): string {
@@ -43,16 +42,16 @@ const usePriceInput = (label:string, placeholder:string, currencyOptions = defau
   }
 
 
-
   function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
     const {currentTarget:{value}} = e
-    let newState = {...defaultState, ...{value}}
+     let amount = +value ? value : '0'
+    let newState = {...defaultState, ...{amount}}
     updateState(newState)
   }
 
   function handleOnBlur() {
-    let value = formatPrice(state.value)
-    let newState = {...defaultState, ...{value}}
+    let amount = formatPrice(state.amount)
+    let newState = {...defaultState, ...{amount}}
     updateState(newState)
   }
 
@@ -67,7 +66,8 @@ const usePriceInput = (label:string, placeholder:string, currencyOptions = defau
     updateState(newState)
   }
 
-  const {error, success, value} = state
+
+  const {error, success, amount} = state
   const PriceInput  = () => (
     <>
       <label htmlFor={id}>
@@ -76,7 +76,7 @@ const usePriceInput = (label:string, placeholder:string, currencyOptions = defau
           ref={inputRef}
           type="text"
           placeholder={placeholder}
-          value={value}
+          value={amount}
           onChange={handleOnChange}
           onMouseEnter={handleOnKeyDown}
           onBlur={handleOnBlur}
@@ -85,7 +85,7 @@ const usePriceInput = (label:string, placeholder:string, currencyOptions = defau
   
     </>
   )
-  return [state.value, PriceInput, updatePrice]
+  return [state.amount, PriceInput, updatePrice]
 }
 
 export default usePriceInput
