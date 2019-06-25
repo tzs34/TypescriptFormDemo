@@ -7,7 +7,7 @@ const useDatePicker = ( handleChangeTo, initialDate = date ) => {
   
     return (
       <div className="picker">
-        <DatePicker/>
+        <DatePicker onChange={ (value) => handleDateChange(value)}/>
       </div>
     );
   }
