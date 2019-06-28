@@ -5,21 +5,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   entry: path.join(__dirname, 'src/index.tsx'),
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js']
   },
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.min.js',
+    filename: 'bundle.min.js'
   },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: 'ts-loader',
+        loader: 'ts-loader'
       },
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(svg)$/,
@@ -27,20 +31,20 @@ module.exports = {
           {
             loader: 'svg-url-loader',
             options: {
-              noquotes: true,
-            },
-          },
-        ],
+              noquotes: true
+            }
+          }
+        ]
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader'],
-      },
-    ],
+        use: ['file-loader']
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-    }),
-  ],
+      template: './src/index.html'
+    })
+  ]
 }
