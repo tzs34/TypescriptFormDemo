@@ -11,6 +11,7 @@ module.exports = {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.min.js'
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
