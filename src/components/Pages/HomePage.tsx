@@ -2,13 +2,15 @@ import * as React from 'react'
 import { RouteComponentProps } from '@reach/router'
 import DatePicker from 'react-datepicker'
 import { usePriceInput, useDropDown, useRadioGroup } from '../Hooks'
-import { FormValidator } from '../../components'
+import { FormValidator, DepositCostField } from '../../components'
+
 import {
   carPriceValidator,
   carSelectValidator,
   dateValidator,
   loanPeriodValidator
 } from '../../utils/validators'
+import { validationProps } from '../../interfaces/interfaces'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../scss/styles.scss'
@@ -30,14 +32,10 @@ const HomePage: React.FunctionComponent<RouteComponentProps> = () => {
   const carDropDownValidator = carSelectValidator(options)
   const loanYearsValidator = loanPeriodValidator(yearOptions)
 
-  let [price, ValidatingPriceInput] = usePriceInput(
-    'Budget amount',
-    'enter a price',
-    carPriceValidator,
-    validate
+  let [period, LoanPeriodGroup] = useRadioGroup(
+    'Loan Period (Years)',
+    yearOptions
   )
-  let [car, CarDropDown] = useDropDown('Car model', '', options)
-  let [period, LoanPeriodGroup] = useRadioGroup('Loan Period', yearOptions)
 
   function submitFormData(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -50,43 +48,47 @@ const HomePage: React.FunctionComponent<RouteComponentProps> = () => {
     setDate(d.toString())
   }
 
+  function handleValidation(obj: validationProps) {
+    console.log(obj)
+  }
+
+  function handlValidationCallback([]: validationProps[]) {}
+
   return (
     <div className="form">
       <h2> Loan Details Form</h2>
       <form onSubmit={submitFormData}>
         <div className="form-section" tabIndex={0}>
-          <ValidatingPriceInput />
-        </div>
-        <div className="form-section" tabIndex={0}>
-          <FormValidator
-            value={car}
-            validationFunction={carDropDownValidator}
+          <DepositCostField
             validate={validateAttempts > 0}
-          >
-            <CarDropDown />
-          </FormValidator>
+            validationCallback={handlValidationCallback}
+          />
         </div>
         <div className="form-section" tabIndex={0}>
           <FormValidator
+            id="deliveryDate"
             value={date}
             validationFunction={dateValidator}
             validate={validateAttempts > 0}
+            onValidate={handleValidation}
           >
-            <label htmlFor={'datepicker'}>
-              Delivery date
+            <div>
+              <label htmlFor={'datepicker'}> Delivery date </label>
               <DatePicker
                 id="datepicker"
                 selected={new Date(date)}
                 onChange={handleDateChange}
               />
-            </label>
+            </div>
           </FormValidator>
         </div>
         <div className="form-section" tabIndex={0}>
           <FormValidator
+            id="loanPeriod"
             value={period}
             validationFunction={loanYearsValidator}
             validate={validateAttempts > 0}
+            onValidate={handleValidation}
           >
             <LoanPeriodGroup />
           </FormValidator>
