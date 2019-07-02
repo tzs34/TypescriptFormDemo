@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { useFormFieldValidation } from '../Hooks'
+import { removePriceFormmating } from '../../utils/app-utils'
+
 interface CurrencyOptions {
   locale: string
   style: string
@@ -24,15 +25,15 @@ const defaultCurrencyOptions = {
 const usePriceInput = (
   label: string,
   placeholder: string,
-  validationFunction: (value: string) => boolean,
-  validate: boolean,
   { locale, currency, style, symbol } = defaultCurrencyOptions
-): [string, boolean, () => JSX.Element] => {
+): [string, () => JSX.Element] => {
   const [state, updateState] = React.useState(defaultState)
   const inputRef = React.useRef(null)
 
   React.useEffect(() => {
-    inputRef.current.focus()
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus()
+    }
   }, [state.amount])
 
   const id = `use-input-${label.replace(' ', '').toLowerCase()}`
@@ -63,14 +64,11 @@ const usePriceInput = (
       return '0'
     }
     if (str.includes(symbol)) {
-      return removeFormmating(str)
+      return removePriceFormmating(str)
     }
     return str
   }
 
-  function removeFormmating(str) {
-    return str.replace(symbol, '').replace(/[','  '.00']/g, '')
-  }
   function handleOnKeyDown(e: React.MouseEvent) {
     updateState(defaultState)
   }
@@ -97,14 +95,9 @@ const usePriceInput = (
     </>
   )
 
-  let returnedValue = removeFormmating(state.amount)
-  const [isValid, InputValidator] = useFormFieldValidation(
-    PriceInput,
-    returnedValue,
-    validationFunction,
-    validate
-  )
-  return [returnedValue, isValid, InputValidator]
+  let returnedValue = removePriceFormmating(state.amount)
+  console.log(`${id} -- ${returnedValue}`)
+  return [returnedValue, PriceInput]
 }
 
 export default usePriceInput

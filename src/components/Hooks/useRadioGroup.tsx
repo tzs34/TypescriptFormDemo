@@ -9,7 +9,7 @@ const useRadioGroup = (
   label: string,
   group: GroupData[] = []
 ): [number, () => JSX.Element, (value: number) => void] => {
-  const [state, updateState] = React.useState(group[0].value)
+  const [state, updateState] = React.useState(0)
 
   const RadioGroup = () => {
     function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
@@ -22,10 +22,11 @@ const useRadioGroup = (
           let checked = value === state
           let id = `${index}${value}`
           return (
-            <div>
+            <div key={id} className="radio-button">
+              <label htmlFor={name}>{value}</label>
               <input
                 type="radio"
-                id={id}
+                id={name}
                 name={name}
                 value={value}
                 key={`${index}${value}`}
