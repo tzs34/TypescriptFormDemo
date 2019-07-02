@@ -6,7 +6,7 @@
   "types": "dist/main.d.ts",
   "jest": {
     "setupFilesAfterEnv": [
-      "<rootDir>/example/src/setupTests.js"
+      "<rootDir>setupTests.js"
     ],
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js"
