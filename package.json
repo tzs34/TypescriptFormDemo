@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "test:watch": "jest --watch",
     "start": "webpack-dev-server --port 3200 --mode development",
     "svg-to-jsx": "svgr -d src/assets/svg src/assets/icons",
