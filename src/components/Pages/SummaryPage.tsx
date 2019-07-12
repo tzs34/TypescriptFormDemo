@@ -3,6 +3,9 @@ import { RouteComponentProps } from '@reach/router'
 
 const SummaryPage: React.FunctionComponent<
   RouteComponentProps<{ id: string }>
-> = () => <div />
+> = ({ location }) => {
+  console.log(location.state)
+  return <div>Summary</div>
+}
 
 export default SummaryPage
