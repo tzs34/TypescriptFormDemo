@@ -4,14 +4,11 @@ import HomePage from './components/Pages/HomePage'
 import SummaryPage from './components/Pages/SummaryPage'
 
 const App = () => {
-  function upDateContext() {}
-
   return (
     <div>
       <Router>
-        <HomePage path="/">
-          <SummaryPage path="/details/:id" />
-        </HomePage>
+        <HomePage path="/" />
+        <SummaryPage path="/details" />
       </Router>
     </div>
   )
