@@ -3,10 +3,10 @@
 A simple experiment using hooks for form management.
 
 # Getting Started
-Clone the repo
-Install the dependencies. Run npm install
-Start the application. Run npm start
-Open your browser at localhost:3200
+1. Clone the repo
+2. Install the dependencies. Run npm install
+3. Start the application. Run npm start
+4. Open your browser at localhost:3200
 
 # Introduction 
 A car company technical test.
