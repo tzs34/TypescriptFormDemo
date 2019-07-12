@@ -1,11 +1,10 @@
 import * as React from 'react'
 import { RouteComponentProps } from '@reach/router'
 import DatePicker from 'react-datepicker'
-import { usePriceInput, useDropDown, useRadioGroup } from '../Hooks'
-import { FormValidator, DepositCostField } from '../../components'
+import { useButtonGroup } from '../Hooks'
+import { FormValidator, DepositCostField, Form } from '../../components'
 
 import {
-  carPriceValidator,
   carSelectValidator,
   dateValidator,
   loanPeriodValidator
@@ -15,13 +14,12 @@ import { validationProps } from '../../interfaces/interfaces'
 import 'react-datepicker/dist/react-datepicker.css'
 import '../../scss/styles.scss'
 
-const options = ['One', 'Two', 'Three']
 const initialDate = new Date().toString()
-const yearOptions = [
-  { name: '1 Year', value: 1 },
-  { name: '2 Year', value: 2 },
-  { name: '3 Year', value: 3 }
-]
+const yearOptions = ['1 Year', '2 Year', '3 Year']
+
+let validated = {}
+
+const NUMBER_FIELDS = 4
 
 const HomePage: React.FunctionComponent<RouteComponentProps> = () => {
   let [validateAttempts, setValidationAttempts] = React.useState(0)
@@ -29,10 +27,9 @@ const HomePage: React.FunctionComponent<RouteComponentProps> = () => {
 
   let validate = validateAttempts > 0
 
-  const carDropDownValidator = carSelectValidator(options)
   const loanYearsValidator = loanPeriodValidator(yearOptions)
 
-  let [period, LoanPeriodGroup] = useRadioGroup(
+  let [period, LoanPeriodGroup] = useButtonGroup(
     'Loan Period (Years)',
     yearOptions
   )
@@ -48,28 +45,36 @@ const HomePage: React.FunctionComponent<RouteComponentProps> = () => {
     setDate(d.toString())
   }
 
-  function handleValidation(obj: validationProps) {
-    console.log(obj)
+  function handleValidation({ id, isValid }: validationProps) {
+    validated = { ...validated, ...{ [id]: isValid } }
+    if (isFormValid(validated)) {
+    }
   }
 
-  function handlValidationCallback([]: validationProps[]) {}
+  function isFormValid(validationObj: object) {
+    let validated = Object.values(validationObj)
+    return (
+      validated.length === NUMBER_FIELDS &&
+      validated.every(value => Boolean(value))
+    )
+  }
 
   return (
     <div className="form">
-      <h2> Loan Details Form</h2>
-      <form onSubmit={submitFormData}>
-        <div className="form-section" tabIndex={0}>
+      <h2> Loan Details Form </h2>
+      <Form onSubmit={submitFormData}>
+        <div className="form-section" data-testid="deposit-cost-section">
           <DepositCostField
-            validate={validateAttempts > 0}
-            validationCallback={handlValidationCallback}
+            validate={validate}
+            validationCallback={handleValidation}
           />
         </div>
-        <div className="form-section" tabIndex={0}>
+        <div className="form-section" data-testid="delivery-section">
           <FormValidator
             id="deliveryDate"
             value={date}
             validationFunction={dateValidator}
-            validate={validateAttempts > 0}
+            validate={validate}
             onValidate={handleValidation}
           >
             <div>
@@ -78,25 +83,23 @@ const HomePage: React.FunctionComponent<RouteComponentProps> = () => {
                 id="datepicker"
                 selected={new Date(date)}
                 onChange={handleDateChange}
+                data-testid="date-picker"
               />
             </div>
           </FormValidator>
         </div>
-        <div className="form-section" tabIndex={0}>
+        <div className="form-section" data-testid="loan-years-section">
           <FormValidator
             id="loanPeriod"
             value={period}
             validationFunction={loanYearsValidator}
-            validate={validateAttempts > 0}
+            validate={validate}
             onValidate={handleValidation}
           >
             <LoanPeriodGroup />
           </FormValidator>
         </div>
-        <div className="form-section btn-centered">
-          <input type="submit" value="Submit Loan" />
-        </div>
-      </form>
+      </Form>
     </div>
   )
 }

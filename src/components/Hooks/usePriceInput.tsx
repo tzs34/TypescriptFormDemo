@@ -25,6 +25,7 @@ const defaultCurrencyOptions = {
 const usePriceInput = (
   label: string,
   placeholder: string,
+  disabled: boolean = false,
   { locale, currency, style, symbol } = defaultCurrencyOptions
 ): [string, () => JSX.Element] => {
   const [state, updateState] = React.useState(defaultState)
@@ -36,7 +37,7 @@ const usePriceInput = (
     }
   }, [state.amount])
 
-  const id = `use-input-${label.replace(' ', '').toLowerCase()}`
+  const id = `${label.replace(' ', '').toLowerCase()}`
 
   function formatPrice(value: string): string {
     const formatter = new Intl.NumberFormat(locale, { style, currency })
@@ -47,13 +48,7 @@ const usePriceInput = (
     const {
       currentTarget: { value }
     } = e
-    let amount = +value ? value : '0'
-    let newState = { ...defaultState, ...{ amount } }
-    updateState(newState)
-  }
-
-  function handleOnBlur(e: React.FormEvent<HTMLInputElement>) {
-    let current = checkValue(state.amount)
+    let current = checkValue(value)
     let amount = formatPrice(current)
     let newState = { ...defaultState, ...{ amount } }
     updateState(newState)
@@ -80,23 +75,23 @@ const usePriceInput = (
   }
 
   const PriceInput = () => (
-    <>
+    <div data-testid={`price-input-${id}`}>
       <label htmlFor={id}>{label}</label>
       <input
         id={id}
         ref={inputRef}
         type="text"
+        disabled={disabled}
         placeholder={placeholder}
         value={state.amount}
         onChange={handleOnChange}
         onMouseEnter={handleOnKeyDown}
-        onBlur={handleOnBlur}
+        tabIndex={0}
       />
-    </>
+    </div>
   )
 
   let returnedValue = removePriceFormmating(state.amount)
-  console.log(`${id} -- ${returnedValue}`)
   return [returnedValue, PriceInput]
 }
 

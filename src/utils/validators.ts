@@ -17,13 +17,10 @@ const carDepositValidator = (price: string) => (deposit: string) => {
   }
   return false
 }
-const dateValidator = d => {
-  console.log(d >= CURRENT_DATE)
-  return new Date(d) >= CURRENT_DATE
-}
+const dateValidator = d => new Date(d) >= CURRENT_DATE
 
 const loanPeriodValidator = options => period =>
-  options.findIndex(el => el.value === period) !== -1
+  options.findIndex(el => el === period) !== -1
 
 const carSelectValidator = options => value => {
   return options.includes(value)

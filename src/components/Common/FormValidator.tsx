@@ -1,17 +1,13 @@
 import * as React from 'react'
 import { ErrorSuccessIndicator } from '../../components'
-
-interface validatedProps {
-  id: string
-  isValid: boolean
-}
+import { validationProps } from '../../interfaces/interfaces'
 
 interface FormValidatorProps {
   children: React.ReactChild
   id: string
   value: string | number
   validationFunction: (value: string | number) => boolean
-  onValidate?: (obj: validatedProps) => void
+  onValidate?: (obj: validationProps) => void
   validate?: boolean
 }
 
@@ -38,11 +34,9 @@ const FormValidator: React.FunctionComponent<FormValidatorProps> = ({
   return (
     <div className="validation-container">
       <div>{children}</div>
-      {validate && (
-        <div>
-          <ErrorSuccessIndicator valid={valid} />
-        </div>
-      )}
+      <div className={`${validate ? 'show' : 'hide'}`}>
+        <ErrorSuccessIndicator valid={valid} />
+      </div>
     </div>
   )
 }

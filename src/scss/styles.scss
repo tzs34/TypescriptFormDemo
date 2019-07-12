@@ -4,6 +4,10 @@
   font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
 }
 
+// *:focus {
+//   outline: none !important;
+// }
+
 input {
   padding: 0.5em;
   margin: 1em;
@@ -25,11 +29,11 @@ select {
     margin: 1em;
   }
 
-  &.show {
-    display: inline-block;
+  & .show {
+    visibility: visible;
   }
-  &.hide {
-    display: none;
+  & .hide {
+    visibility: hidden;
   }
 }
 
@@ -58,5 +62,29 @@ select {
 
   &.btn-centered {
     margin-left: 25%;
+  }
+}
+
+.form-button {
+  display: flex;
+  justify-content: center;
+}
+
+.button-row {
+  display: flex;
+  justify-content: left;
+  align-content: space-between;
+  padding: 10px;
+
+  & > div {
+    padding: 0.25em;
+  }
+}
+
+.group-btn {
+  background: black;
+  color: white;
+  &:focus {
+    background: #61b329;
   }
 }

@@ -16,13 +16,17 @@ const useRadioGroup = (
       updateState(Number(e.currentTarget.value))
     }
     return (
-      <fieldset>
+      <fieldset data-testid="radio-group">
         <legend>{label}</legend>
         {group.map(({ name, value }, index) => {
           let checked = value === state
           let id = `${index}${value}`
           return (
-            <div key={id} className="radio-button">
+            <div
+              key={id}
+              className="radio-button"
+              data-testid={`radio-button-${index}`}
+            >
               <label htmlFor={name}>{value}</label>
               <input
                 type="radio"

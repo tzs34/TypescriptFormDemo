@@ -7,34 +7,29 @@ import { validationProps } from '../../interfaces/interfaces'
 
 interface DepositCostProps {
   validate: boolean
-  validationCallback: ([]: validationProps[]) => void
+  validationCallback: (obj: validationProps) => void
+  disabled?: boolean
 }
 const DepositCostField: React.FunctionComponent<DepositCostProps> = ({
   validate,
   validationCallback
 }) => {
+  let [price, PriceInput] = usePriceInput('Car Price', 'Enter a total price')
+
   let [deposit, DepositInput] = usePriceInput(
     'Deposit amount',
-    'enter a deposit'
+    'Enter a deposit',
+    !carPriceValidator(price)
   )
-  let [price, PriceInput] = usePriceInput(
-    'Budget amount',
-    'enter a total price'
-  )
-  let [validationValues, setValidationValues] = React.useState([])
-
-  React.useEffect(() => {
-    if (validationCallback) {
-      validationCallback(validationValues)
-    }
-  }, [validate])
-
   function handleOnValidate(obj: validationProps) {
-    setValidationValues(validationValues.concat(obj))
+    if (validationCallback) {
+      validationCallback(obj)
+    }
   }
+
   return (
-    <>
-      <div className="form-section" tabIndex={0}>
+    <div data-testid="cost-price">
+      <div className="form-section">
         <FormValidator
           id="price"
           value={price}
@@ -45,20 +40,18 @@ const DepositCostField: React.FunctionComponent<DepositCostProps> = ({
           <PriceInput />
         </FormValidator>
       </div>
-      <div className="form-section" tabIndex={0}>
-        {price && (
-          <FormValidator
-            id="deposit"
-            value={deposit}
-            validationFunction={carDepositValidator(price)}
-            validate={validate}
-            onValidate={handleOnValidate}
-          >
-            <DepositInput />
-          </FormValidator>
-        )}
+      <div className="form-section">
+        <FormValidator
+          id="deposit"
+          value={deposit}
+          validationFunction={carDepositValidator(price)}
+          validate={validate}
+          onValidate={handleOnValidate}
+        >
+          <DepositInput />
+        </FormValidator>
       </div>
-    </>
+    </div>
   )
 }
 
