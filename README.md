@@ -1,8 +1,13 @@
-<<<<<<< HEAD
+
 # Introduction
+A simple experiment using hooks for form management.
 
 # Getting Started
-=======
+Clone the repo
+Install the dependencies. Run npm install
+Start the application. Run npm start
+Open your browser at localhost:3200
+
 # Introduction 
 A car company technical test.
 # Getting Started
