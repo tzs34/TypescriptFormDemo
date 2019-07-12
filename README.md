@@ -28,7 +28,7 @@ payments
 XXXXXX Mock data supplied
 This will return a JSON response. We&#39;re most interested in the `searchResults` array.
  Your code should reflect clean coding principles and contain tests.
->>>>>>> 5d9315d92564f1b55dcf728bd65a56b63a7d9e73
+
 
 # Build and Test
 
