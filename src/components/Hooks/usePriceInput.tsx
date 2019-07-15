@@ -1,13 +1,9 @@
 import * as React from 'react'
-import { removePriceFormmating } from '../../utils/app-utils'
-
-interface CurrencyOptions {
-  locale: string
-  style: string
-  currency: string
-  symbol: string
-}
-
+import {
+  removePriceFormmating,
+  formatPrice,
+  isCurrencyFormatted
+} from '../../utils/app-utils'
 interface StateProps {
   amount: string
 }
@@ -15,18 +11,10 @@ const defaultState = {
   amount: ''
 }
 
-const defaultCurrencyOptions = {
-  locale: 'en-GB',
-  style: 'currency',
-  currency: 'GBP',
-  symbol: '£'
-}
-
 const usePriceInput = (
   label: string,
   placeholder: string,
-  disabled: boolean = false,
-  { locale, currency, style, symbol } = defaultCurrencyOptions
+  disabled: boolean = false
 ): [string, () => JSX.Element] => {
   const [state, updateState] = React.useState(defaultState)
   const inputRef = React.useRef(null)
@@ -38,11 +26,6 @@ const usePriceInput = (
   }, [state.amount])
 
   const id = `${label.replace(' ', '').toLowerCase()}`
-
-  function formatPrice(value: string): string {
-    const formatter = new Intl.NumberFormat(locale, { style, currency })
-    return formatter.format(+value)
-  }
 
   function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
     const {
@@ -58,7 +41,7 @@ const usePriceInput = (
     if (str.length === 0) {
       return '0'
     }
-    if (str.includes(symbol)) {
+    if (isCurrencyFormatted(str)) {
       return removePriceFormmating(str)
     }
     return str
