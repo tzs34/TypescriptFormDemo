@@ -73,63 +73,65 @@ const HomePage: React.FunctionComponent<RouteComponentProps> = ({
   }
 
   return (
-    <div className="form">
-      <h2> Loan Details Form </h2>
-      <Form onSubmit={submitFormData}>
-        <div className="form-section">
-          <FormValidator
-            id="price"
-            value={price}
-            validationFunction={carPriceValidator}
-            validate={validate}
-            onValidate={handleValidation}
-          >
-            <PriceInput />
-          </FormValidator>
-        </div>
-        <div className="form-section">
-          <FormValidator
-            id="deposit"
-            value={deposit}
-            validationFunction={carDepositValidator(price)}
-            validate={validate}
-            onValidate={handleValidation}
-          >
-            <DepositInput />
-          </FormValidator>
-        </div>
-        <div className="form-section" data-testid="delivery-section">
-          <FormValidator
-            id="deliveryDate"
-            value={date}
-            validationFunction={dateValidator}
-            validate={validate}
-            onValidate={handleValidation}
-          >
-            <div>
-              <label htmlFor={'datepicker'}> Delivery date </label>
-              <DatePicker
-                id="datepicker"
-                selected={new Date(date)}
-                onChange={handleDateChange}
-                data-testid="date-picker"
-              />
-            </div>
-          </FormValidator>
-        </div>
-        <div className="form-section" data-testid="loan-years-section">
-          <FormValidator
-            id="loanPeriod"
-            value={period}
-            validationFunction={loanYearsValidator}
-            validate={validate}
-            onValidate={handleValidation}
-          >
-            <LoanPeriodGroup />
-          </FormValidator>
-        </div>
-      </Form>
-    </div>
+    <main>
+      <div className="form">
+        <h2> Loan Details Form </h2>
+        <Form onSubmit={submitFormData}>
+          <div className="form-section">
+            <FormValidator
+              id="price"
+              value={price}
+              validationFunction={carPriceValidator}
+              validate={validate}
+              onValidate={handleValidation}
+            >
+              <PriceInput />
+            </FormValidator>
+          </div>
+          <div className="form-section">
+            <FormValidator
+              id="deposit"
+              value={deposit}
+              validationFunction={carDepositValidator(price)}
+              validate={validate}
+              onValidate={handleValidation}
+            >
+              <DepositInput />
+            </FormValidator>
+          </div>
+          <div className="form-section" data-testid="delivery-section">
+            <FormValidator
+              id="deliveryDate"
+              value={date}
+              validationFunction={dateValidator}
+              validate={validate}
+              onValidate={handleValidation}
+            >
+              <div>
+                <label htmlFor={'datepicker'}> Delivery date </label>
+                <DatePicker
+                  id="datepicker"
+                  selected={new Date(date)}
+                  onChange={handleDateChange}
+                  data-testid="date-picker"
+                />
+              </div>
+            </FormValidator>
+          </div>
+          <div className="form-section" data-testid="loan-years-section">
+            <FormValidator
+              id="loanPeriod"
+              value={period}
+              validationFunction={loanYearsValidator}
+              validate={validate}
+              onValidate={handleValidation}
+            >
+              <LoanPeriodGroup />
+            </FormValidator>
+          </div>
+        </Form>
+      </div>
+    </main>
   )
 }
 
