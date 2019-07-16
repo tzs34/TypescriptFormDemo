@@ -8,6 +8,12 @@
   outline: none !important;
 }
 
+li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
 input {
   padding: 0.5em;
   margin: 1em;
@@ -86,5 +92,43 @@ select {
   color: white;
   &:focus {
     background: #61b329;
+  }
+}
+
+.summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.car-display-container {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid grey;
+  margin: 5px;
+
+  & div {
+    display: flex;
+    flex-direction: column;
+    padding: 0.25em;
+    width: 300px;
+    align-content: center;
+    & > button {
+      align-self: flex-end;
+      width: 200px;
+      height: 40px;
+      padding: 0.5em;
+      margin: 0.5em;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .validation-container {
+    width: 150px;
+  }
+  .car-display-container {
+    flex-direction: column;
   }
 }
