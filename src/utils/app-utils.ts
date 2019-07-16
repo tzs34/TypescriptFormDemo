@@ -1,4 +1,42 @@
 import { carDataProps } from '../interfaces/interfaces'
+import { isNumericLiteral } from '@babel/types'
+import { dateValidator } from './validators'
+import { number, object } from 'prop-types'
+
+const YEAR_MONTHS = 12
+const ADD_MONTH = 1
+
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
+// fees are in GDP
+export const appConstants = {
+  firstMonthFee: 88,
+  lastMonthFee: 20,
+  minDepositAmount: 15,
+  displayNumberCars: 6
+}
+
+const { firstMonthFee, lastMonthFee } = appConstants
+
+const DEFAULT_LOCALE = 'en-GB'
+const dateFormatOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}
 
 interface CurrencyOptions {
   locale: string
@@ -14,8 +52,55 @@ const defaultCurrencyOptions = {
   symbol: '£'
 }
 
+const isNumeric = (value: string): boolean => !isNaN(Number(value))
+
+function formatLocalDateString(
+  date: Date,
+  locale: string = DEFAULT_LOCALE,
+  options: object = dateFormatOptions
+) {
+  return date.toLocaleDateString(locale, options)
+}
+
 export const removePriceFormmating = (str: string, symbol: string = '£') => {
   return str.replace(symbol, '').replace(/[','  '.00']/g, '')
+}
+
+export function calculateMonthlyPayments(price: number, period: number): {} {
+  let repaymentDates = {}
+  let yearIndex = 1
+  let currentDate = new Date()
+  let currentYear = currentDate.getFullYear()
+  let firstPaymentMonth = currentDate.getMonth() + ADD_MONTH
+  let monthyFee = monthlyCost(price, period)
+  let numberMonths = period * YEAR_MONTHS
+  let remainingMonthsCurrentYear = YEAR_MONTHS - firstPaymentMonth
+
+  if (remainingMonthsCurrentYear > 0) {
+    let months = getFirstMondayofMonth(currentYear, firstPaymentMonth)
+    repaymentDates[currentYear] = months
+
+    numberMonths = numberMonths - remainingMonthsCurrentYear
+  }
+
+  while (numberMonths > 0) {
+    currentYear++
+    let months = getFirstMondayofMonth(currentYear)
+    repaymentDates[currentYear] = months
+    yearIndex++
+    numberMonths = numberMonths - YEAR_MONTHS
+  }
+
+  repaymentDates['monthlyCost'] = monthyFee
+  repaymentDates['firstMonthFee'] = firstMonthFee
+  repaymentDates['lastMonthFee'] = lastMonthFee
+  return repaymentDates
+}
+
+function monthlyCost(price: number, period: number): number {
+  let cost = price - (firstMonthFee + lastMonthFee)
+  let loanTerm = period * YEAR_MONTHS
+  return cost / loanTerm
 }
 
 export const formatPrice = (
@@ -32,6 +117,7 @@ export const isCurrencyFormatted = (str: string) => str.includes('.00')
 export function processCarData(
   data: carDataProps,
   budget: number,
+  displayCarNumber: number,
   currencyOptions: CurrencyOptions = defaultCurrencyOptions
 ) {
   let availableCars = data.searchResults
@@ -42,38 +128,27 @@ export function processCarData(
     )
 
   let formattedCars = availableCars.map(o => {
-    let price = formatPrice(String(o.salesInfo.pricing.cashPrice))
+    let realPrice = o.salesInfo.pricing.cashPrice + lastMonthFee + firstMonthFee
+    let price = formatPrice(String(realPrice))
     return {
       make: o.make,
       description: o.title.name,
       price
     }
   })
-
   return formattedCars
 }
 
-export function getMondayofMonth(year: number) {
-  let months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ],
-    result = {},
+export function getFirstMondayofMonth(year: number, startMonth: number = 0) {
+  let result = [],
     month
 
-  for (month of months) {
-    let d = new Date(`${month} 01, year 00:00:00`)
-    result[month] = getMondays(d)
+  let monthsToUse = startMonth > 0 ? months.slice(startMonth, -1) : months
+
+  for (month of monthsToUse) {
+    let d = new Date(`${month} 01,  ${year}  00:00:00`)
+    let dateStr = getMondays(d)[0].toDateString()
+    result.push(dateStr)
   }
 
   return result
@@ -97,12 +172,4 @@ function getMondays(d: Date) {
   }
 
   return mondays
-}
-
-// fees are in GDP
-export const appConstants = {
-  firstMonthFee: 88,
-  lastMonthFee: 20,
-  minDepositAmount: 15,
-  displayNumberCars: 6
 }
