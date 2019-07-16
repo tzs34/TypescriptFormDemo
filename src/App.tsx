@@ -1,14 +1,18 @@
 import * as React from 'react'
 import { Router } from '@reach/router'
-import HomePage from './components/Pages/HomePage'
-import SummaryPage from './components/Pages/SummaryPage'
+import {
+  HomePage,
+  CarSearchSummaryPage,
+  PaymentSummaryPage
+} from './components/Pages'
 
 const App = () => {
   return (
     <div>
       <Router>
-        <HomePage path="/" />
-        <SummaryPage path="/details" />
+        <HomePage path="/search-details" />
+        <CarSearchSummaryPage path="/" />
+        <PaymentSummaryPage path="/payment-details" />
       </Router>
     </div>
   )
