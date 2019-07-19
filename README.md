@@ -24,6 +24,12 @@ This will return a JSON response. We&#39;re most interested in the `searchResult
 
 # My Solution
 
+I wanted to try out React Hooks on the problem. Each component is 'hookefied' , that is hooks for form components return the state of the component and the component itself, (e.g. see src\components\Hooks\usePriceInput.tsx).  For validation I coded another hook which wraps the form component and accepts a validation function to test if the value of the component is valid and return an object with the value and isVaid properties and a component to render in the UI. . I split out each form componet hook and validation hook for each Validated component (as I call them) , just to make the code more maintainable and less cluttered.
+
+For routing I used reach-router , mainly because it has better accessibility than react-router. Passing the form values between views is simpe as reach-router allows you to add these values to the Context API.
+
+The task fully isn't finished , but does give a flavour of my coding style and I hope you like it.
+
 # Build and Test
 
 # Contribute
