@@ -1,6 +1,6 @@
 # Introduction
 
-A car company technical test. I decoided to see how I could use React Hooks to address the problem of building a fairly complex form and include validation. 
+A car company technical test. I decided to see how I could use React Hooks to address the problem of building a fairly complex form and include validation. 
 
 # Getting Started
 
