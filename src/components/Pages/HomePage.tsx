@@ -27,11 +27,15 @@ const HomePage: React.FunctionComponent<RouteComponentProps> = ({
 
   function submitFormData(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    if(validPrice){
+    if(isValidForm()){
       navigate('/search-details', {
         state: {price}
       })
     }
+  }
+
+  function isValidForm(){
+    return validPrice && validDeposit && validDeliveryDate && validLoanPeriod
   }
 
   return (
