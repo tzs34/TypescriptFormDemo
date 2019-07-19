@@ -2,7 +2,7 @@
 
 A car company technical test. I decided to see how I could use React Hooks to address the problem of building a fairly complex form and include validation. 
 
-# Getting Started
+# The Task
 
 Car company X wants to introduce a new interest free car loan.
 Using React
@@ -21,6 +21,8 @@ payments
 XXXXXX Mock data supplied
 This will return a JSON response. We&#39;re most interested in the `searchResults` array.
  Your code should reflect clean coding principles and contain tests.
+
+# My Solution
 
 # Build and Test
 
