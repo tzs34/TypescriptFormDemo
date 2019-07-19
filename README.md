@@ -28,7 +28,7 @@ I wanted to try out React Hooks on the problem. Each component is 'hookefied' , 
 
 For routing I used reach-router , mainly because it has better accessibility than react-router. Passing the form values between views is simple as reach-router allows you to add these values to the Context API.
 
-The task fully isn't finished , but does give a flavour of my coding style and I hope you like it.
+The task isn't fully finished , but does give a flavour of my coding style and I hope you like it.
 
 # Build and Test
 
