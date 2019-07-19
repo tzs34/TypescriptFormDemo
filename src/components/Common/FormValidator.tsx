@@ -19,23 +19,13 @@ const FormValidator: React.FunctionComponent<FormValidatorProps> = ({
   onValidate,
   validate = false
 }) => {
-  const [valid, setValid] = React.useState(false)
 
-  React.useEffect(() => {
-    if (validate) {
-      let isValid = validationFunction(value)
-      setValid(isValid)
-      if (onValidate) {
-        onValidate({ id, isValid })
-      }
-    }
-  })
-
+  let isValid = validationFunction(value)
   return (
     <div className="validation-container">
       <div>{children}</div>
-      <div className={`${validate ? 'show' : 'hide'}`}>
-        <ErrorSuccessIndicator valid={valid} />
+      <div className={`${isValid ? 'show' : 'hide'}`}>
+        <ErrorSuccessIndicator id={id} valid={isValid} />
       </div>
     </div>
   )

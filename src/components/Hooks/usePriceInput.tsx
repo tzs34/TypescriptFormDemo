@@ -56,7 +56,7 @@ const usePriceInput = (
     let newState = { ...defaultState, ...{ value } }
     updateState(newState)
   }
-
+console.log(`${id} and disbaled = ${disabled}`)
   const PriceInput = () => (
     <div data-testid={`price-input-${id}`}>
       <label htmlFor={id}>{label}</label>

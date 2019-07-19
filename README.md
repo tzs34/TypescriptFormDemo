@@ -1,16 +1,9 @@
-
 # Introduction
-A simple experiment using hooks for form management.
 
-# Getting Started
-1. Clone the repo
-2. Install the dependencies. Run npm install
-3. Start the application. Run npm start
-4. Open your browser at localhost:3200
-
-# Introduction 
 A car company technical test.
+
 # Getting Started
+
 Car company X wants to introduce a new interest free car loan.
 Using React
  Create a web application that will allow one of our Product Consultants to produce a
@@ -28,7 +21,6 @@ payments
 XXXXXX Mock data supplied
 This will return a JSON response. We&#39;re most interested in the `searchResults` array.
  Your code should reflect clean coding principles and contain tests.
-
 
 # Build and Test
 

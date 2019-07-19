@@ -18,8 +18,10 @@ const SummaryPage: React.FunctionComponent<RouteComponentProps> = ({
   }, [])
 
   function handleOnClick(price) {
+
+
     navigate('/payment-details', {
-      state: { price }
+      state: { price, period: 1 }
     })
   }
 

@@ -10,8 +10,8 @@ const App = () => {
   return (
     <div>
       <Router>
-        <HomePage path="/search-details" />
-        <CarSearchSummaryPage path="/" />
+        <HomePage path="/" />
+        <CarSearchSummaryPage path="/search-details" />
         <PaymentSummaryPage path="/payment-details" />
       </Router>
     </div>

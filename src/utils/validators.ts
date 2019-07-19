@@ -5,6 +5,8 @@ const CURRENT_DATE = new Date()
 const isNumeric = (value: any) => !isNaN(value - parseFloat(value))
 
 const carPriceValidator = (price: string) => {
+
+  console.log(` carPriceValidator price = ${price} and isNumeric(price) = ${isNumeric(price)}`)
   if (isNumeric(price)) {
     return Number(price) >= LOWEST_PRICE && Number(price) <= HIGHEST_PRICE
   }
