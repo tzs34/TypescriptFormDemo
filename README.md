@@ -1,6 +1,6 @@
 # Introduction
 
-A car company technical test. I decided to see how I could use React Hooks to address the problem of building a fairly complex form and include validation. 
+A car company technical test. I decided to see how I could use React Hooks to address the problem of building a fairly complex form and include validation. I also wanted to get more used to TypeScript as most of my contracts / projects just used JavaScript.
 
 # The Task
 
