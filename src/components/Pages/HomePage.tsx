@@ -29,7 +29,7 @@ const HomePage: React.FunctionComponent<RouteComponentProps> = ({
     e.preventDefault()
     if(isValidForm()){
       navigate('/search-details', {
-        state: {price}
+        state: {price, deposit, deliveryDate, loanPeriod}
       })
     }
   }
