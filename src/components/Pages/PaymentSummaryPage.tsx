@@ -10,9 +10,9 @@ const PaymentPage: React.FunctionComponent<RouteComponentProps> = ({
     // here would useFetch hook to get data from the api etc
     // But as we should not do that - we can use mock data
 
-    //const { price, period } = location.state
+    const { price, period } = location.state
 
-    let summary = calculateMonthlyPayments(24000, 1)
+    let summary = calculateMonthlyPayments(price, period)
   }, [])
 
   return (
